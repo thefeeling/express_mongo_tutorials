@@ -3,11 +3,12 @@
  */
 const service = require('./service');
 
+
 module.exports = {
     list:function (req, res) {
-        return service.list(req.query)
-            .then(function (todoList) {
-               res.json(todoList);
+        service.list(req.query)
+            .then(function (result) {
+                res.json(result);
             });
     },
     get: function (req, res) {

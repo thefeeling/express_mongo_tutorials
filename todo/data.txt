@@ -1,6 +1,3 @@
-// For Tutorial Data
-
-/* 1 */
 {
     "_id" : ObjectId("5892df2a921d91402989b434"),
     "title" : "AngularJS",
@@ -10,7 +7,6 @@
     "createdAt" : ISODate("1970-01-01T00:00:02.956Z")
 }
 
-/* 2 */
 {
     "_id" : ObjectId("5892dfd4921d91402989b435"),
     "title" : "ReactJS",
@@ -20,7 +16,6 @@
     "createdAt" : ISODate("1970-01-01T00:00:02.956Z")
 }
 
-/* 3 */
 {
     "_id" : ObjectId("5892dfd4921d91402989b436"),
     "title" : "ExpressJS",
@@ -30,7 +25,6 @@
     "createdAt" : ISODate("1970-01-01T00:00:02.956Z")
 }
 
-/* 4 */
 {
     "_id" : ObjectId("5892dfd4921d91402989b437"),
     "title" : "JavaScript",
@@ -40,7 +34,6 @@
     "createdAt" : ISODate("1970-01-01T00:00:02.956Z")
 }
 
-/* 5 */
 {
     "_id" : ObjectId("5892dfd4921d91402989b438"),
     "title" : "AngularJS",
@@ -50,7 +43,6 @@
     "createdAt" : ISODate("1970-01-01T00:00:02.956Z")
 }
 
-/* 6 */
 {
     "_id" : ObjectId("5892dfd4921d91402989b439"),
     "title" : "ExpressJS",
@@ -60,7 +52,6 @@
     "createdAt" : ISODate("1970-01-01T00:00:02.956Z")
 }
 
-/* 7 */
 {
     "_id" : ObjectId("5892dfd4921d91402989b43a"),
     "title" : "mongoDB",
@@ -70,7 +61,6 @@
     "createdAt" : ISODate("1970-01-01T00:00:02.956Z")
 }
 
-/* 8 */
 {
     "_id" : ObjectId("5892dfd4921d91402989b43b"),
     "title" : "Http",
@@ -80,7 +70,6 @@
     "createdAt" : ISODate("1970-01-01T00:00:02.956Z")
 }
 
-/* 9 */
 {
     "_id" : ObjectId("5892dfd4921d91402989b43c"),
     "title" : "AWS",
@@ -90,7 +79,6 @@
     "createdAt" : ISODate("1970-01-01T00:00:02.956Z")
 }
 
-/* 10 */
 {
     "_id" : ObjectId("5892f8d26d7eb511e7a2f2a9"),
     "title" : "AngularJS2",

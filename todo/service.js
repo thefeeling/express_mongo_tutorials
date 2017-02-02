@@ -3,12 +3,31 @@
  */
 const Todo = require('./model');
 const dbUtil = require('./databaseUtil');
+const _ = require('lodash');
+const co = require('co');
+
+function pageHelper(query) {
+    query.skip =  _.isNumber(query.skip) ? query.skip : 0;
+    query.limit = _.isNumber(query.limit) ? query.limit : 10;
+}
+
+
 
 module.exports = {
     list: function (query) {
-        return Todo.find({}, function (err, todoList) {
-            console.log(todoList);
-            return todoList;
+        pageHelper(query);
+        return co(function* g() {
+            console.log('Start Co Wrap');
+            // const todoList = yield Todo.find(query, (err, items) => items).then(items => items);
+            // const todoList = yield Todo.find(query).skip(query.skip).limit(query.limit).exec();
+            const todoList = yield Todo.find(query).exec((err, items) => items);
+            const totalCount = yield Todo.count(query, (err, count) => count).then(count => count);
+            return yield {
+                items: todoList,
+                skip: query.skip,
+                limit: query.limit,
+                totalCount: totalCount
+            }
         });
     },
     get: function (todoId) {
