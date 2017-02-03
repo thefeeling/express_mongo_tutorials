@@ -9,6 +9,9 @@ module.exports = {
         service.list(req.query)
             .then(function (result) {
                 res.json(result);
+            })
+            .catch(function (err) {
+                console.log(err);
             });
     },
     get: function (req, res) {
@@ -16,24 +19,36 @@ module.exports = {
         return service.get(id)
             .then(function (todo) {
                res.json(todo);
+            })
+            .catch(function (err) {
+                console.log(err);
             });
     },
     create: function (req, res) {
         return service.create(req.body)
             .then(function () {
                 res.status(204).end('No Contents');
+            })
+            .catch(function (err) {
+                console.log(err);
             });
     },
     update: function (req, res) {
         return service.update(req.params.id, req.body)
             .then(function (param) {
                 res.status(204).end('No Contents');
+            })
+            .catch(function (err) {
+                console.log(err);
             });
     },
     remove: function (req, res) {
         return service.remove(req.params.id)
             .then(function () {
                 res.status(204).end('No Contents');
+            })
+            .catch(function (err) {
+                console.log(err);
             });
     }
 };
