@@ -6,58 +6,60 @@ const dbUtil = require('./databaseUtil');
 const _ = require('lodash');
 const co = require('co');
 
+
+
 function pageHelper(query) {
-    query.skip =  _.isNumber(query.skip) ? query.skip : 0;
-    query.limit = _.isNumber(query.limit) ? query.limit : 10;
+    const pageInfo = {};
+    pageInfo.skip = _.isNumber(query.skip) ? query.skip : 0;
+    pageInfo.limit = _.isNumber(query.limit) ? query.limit : 10;
+
+    _.omit(query, ['skip', 'limit']);
+    return pageInfo;
 }
 
 
 
 module.exports = {
     list: function (query) {
-        pageHelper(query);
+        const page = pageHelper(query);
+        // 1) Promise
+        // return Todo.find(query, function (err, items) {
+        //     return err ? [] : items;
+        // });
+
+        // 1-1)
+        // return Todo.find(query)
+        //     .skip(page.skip)
+        //     .limit(page.limit)
+        //     .exec(function (err, items) {
+        //        return err ? [] : items;
+        //     });
+
+        // 2) Generator
         return co(function* g() {
-            console.log('Start Co Wrap');
-            // const todoList = yield Todo.find(query, (err, items) => items).then(items => items);
-            // const todoList = yield Todo.find(query).skip(query.skip).limit(query.limit).exec();
-            const todoList = yield Todo.find(query).exec((err, items) => items);
-            const totalCount = yield Todo.count(query, (err, count) => count).then(count => count);
+            const todoList =  Todo.find(query).skip(page.skip).limit(page.limit).exec();
+            const totalCount = Todo.count(query, (err, count) => count);
             return yield {
                 items: todoList,
-                skip: query.skip,
-                limit: query.limit,
+                skip: page.skip,
+                limit: page.limit,
                 totalCount: totalCount
             }
         });
     },
     get: function (todoId) {
-        return Todo.findOne({ "_id" : dbUtil.ObjectId(todoId)}, function (err, todo) {
-           return todo;
-        });
+        return Todo.findById(todoId);
     },
     create: function (body) {
-        const newTodo = new Todo(body);
-        return newTodo.save(function (err) {
-            if(err) console.error(err);
-            return newTodo;
-        });
+        return Todo.create(body);
     },
     update: function (todoId, body) {
         if(body.status === 'DONE'){
             body.doneAt = new Date();
         }
-        // Model.update의 경우, Promise 리턴 없음
-        return new Promise(function (resolve, reject) {
-            Todo.update({ "_id" : dbUtil.ObjectId(todoId)}, body, {}, function (err, rawResponse) {
-                if(err) reject(err);
-                resolve(rawResponse);
-            });
-        });
+        return Todo.update({ _id: todoId}, { $set: body });
     },
     remove: function (todoId) {
-        return Todo.remove({ "_id" : dbUtil.ObjectId(todoId)}, function (err) {
-           if(err) reject(err);
-           return undefined;
-        });
+        return Todo.remove({ _id : todoId});
     }
 };
