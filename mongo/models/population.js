@@ -20,8 +20,8 @@ const storySchema = Schema({
     fans     : [{ type: Number, ref: 'Person' }]
 });
 
-const Story  = mongoose.model('Story', storySchema);
 const Person = mongoose.model('Person', personSchema);
+const Story  = mongoose.model('Story', storySchema);
 
 module.exports = {
     Story,
