@@ -21,9 +21,12 @@ const selected = 'title status context dueDate doneAt createdAt';
  */
 function paging(query) {
     const pageInfo = {};
-    pageInfo.skip = _.isNumber(query.skip) ? query.skip : 0;
-    pageInfo.limit = _.isNumber(query.limit) ? query.limit : 10;
-    _.omit(query, ['skip', 'limit']);
+    const skip = parseInt(query.skip, 10);
+    const limit = parseInt(query.limit, 10);
+    pageInfo.skip = _.isNumber(skip) ? skip : 0;
+    pageInfo.limit = _.isNumber(limit) ? limit : 10;
+    delete query.skip;
+    delete query.limit;
     return pageInfo;
 }
 
@@ -108,13 +111,16 @@ module.exports = {
     },
 
     get: function (todoId) {
-        return Todo.findById(todoId);
+        return co(function* () {
+            return yield Todo.findById(todoId);
+        });
     },
 
     create: function (body) {
         return Todo.create(body);
     },
 
+    // API 확인 후 Conditional Update 가능 확인 해야 함
     update: function (todoId, body) {
         if(body.status === 'DONE'){
             body.doneAt = new Date();
