@@ -33,7 +33,7 @@ function successWithoutContent(res) {
  */
 function errorWithJson(res) {
     return (error) => {
-        res.status(4004).json({
+        res.status(400).json({
             error: {
                 name: error.name,
                 message: error.message
